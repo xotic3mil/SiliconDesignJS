@@ -1,120 +1,92 @@
 <script setup>
 import { ref } from 'vue'
 
-const fullName = ref('')
-const email = ref('')
-const specialist = ref('')
-const errors = ref({
-  fullName: '',
-  email: '',
-  specialist: '',
-})
+const submitted = ref(false)
 
-const validateForm = () => {
-  let isValid = true
-  errors.value = {
-    fullName: '',
-    email: '',
-    specialist: '',
-  }
+const submitHandler = async formData => {
+  console.log(formData)
+  try {
+    const response = await fetch(
+      'https://win24-assignment.azurewebsites.net/api/forms/contact',
+      {
+        method: 'POST', 
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      },
+    )
 
-  // Full Name validation: must not be empty and only letters/spaces allowed
-  const nameRegex = /^[A-Za-z\s]+$/
-  if (!fullName.value.trim()) {
-    errors.value.fullName = 'Full Name is required'
-    isValid = false
-  } else if (!nameRegex.test(fullName.value)) {
-    errors.value.fullName = 'Full Name can only contain letters and spaces'
-    isValid = false
-  }
-
-  // Email validation
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  if (!email.value.trim()) {
-    errors.value.email = 'Email Address is required'
-    isValid = false
-  } else if (!emailRegex.test(email.value)) {
-    errors.value.email = 'Please enter a valid email address'
-    isValid = false
-  }
-
-  // Specialist validation: must not be empty and only letters/spaces allowed
-  if (!specialist.value.trim()) {
-    errors.value.specialist = 'Specialist is required'
-    isValid = false
-  } else if (!nameRegex.test(specialist.value)) {
-    errors.value.specialist = 'Specialist can only contain letters and spaces'
-    isValid = false
-  }
-
-  return isValid
-}
-
-const handleSubmit = e => {
-  e.preventDefault()
-  if (validateForm()) {
-    const user = {
-      fullName: fullName.value,
-      email: email.value,
-      specialist: specialist.value,
+    console.log(response)
+    if (response.ok) {
+      submitted.value = true
     }
-    console.log('Form Submitted:', user)
+  } catch (error) {
+    console.error('Error:', error)
   }
 }
 </script>
 
 <template>
-  <form @submit="handleSubmit" class="reg-form">
-    <h2 class="form-title">Get Online Consultation</h2>
+  <div class="reg-form">
+    <FormKit
+      type="form"
+      id="registration"
+      :form-class="submitted ? 'hide' : 'show'"
+      submit-label="Register"
+      @submit="submitHandler"
+      :actions="false"
+      #default="{ value }"
+    >
+      <h1>Get Online Consultation</h1>
 
-    <div class="input-group">
-      <label for="fullName" class="form-label">Full Name</label>
-      <input
-        v-model="fullName"
-        id="fullName"
+      <FormKit
         type="text"
-        required
-        placeholder="Enter your full name"
-        class="form-input"
-        :class="{ error: errors.firstName }"
+        name="fullName"
+        label="Full Name"
+        placeholder="Jane Doe"
+        help="What do people call you?"
+        validation="required"
       />
-      <p v-if="errors.firstName" class="invalid-input">
-        {{ errors.firstName }}
-      </p>
-    </div>
 
-    <div class="input-group">
-      <label for="email" class="form-label">Email Address</label>
-      <input
-        v-model="email"
-        id="email"
-        type="email"
-        required
-        placeholder="Enter your email address"
-        class="form-input"
-        :class="{ error: errors.email }"
-      />
-      <p v-if="errors.email" class="invalid-input">{{ errors.email }}</p>
-    </div>
-
-    <div class="input-group">
-      <label for="specialist" class="form-label">Specialist</label>
-      <input
-        v-model="specialist"
-        id="specialist"
+      <FormKit
         type="text"
-        required
-        placeholder="Enter specialist name"
-        class="form-input"
-        :class="{ error: errors.specialist }"
+        name="email"
+        label="Your email"
+        placeholder="jane@example.com"
+        help="What email should we use?"
+        validation="required|email:/^[^@\s]+@[^@\s]+\.[^@\s]+$"
       />
-      <p v-if="errors.specialist" class="invalid-input form-input.error">
-        {{ errors.specialist }}
-      </p>
-    </div>
 
-    <button type="submit" class="btn-primary">Make an Appointment</button>
-  </form>
+      <FormKit
+        type="select"
+        name="Specialist"
+        label="Specialist"
+        placeholder="Select specialization"
+        help="Medical Specialties and Subspecialties"
+        :options="[
+          'Allergy and Immunology',
+          'Anesthesiology',
+          'Cardiology',
+          'Colon and Rectal Surgery',
+          'Neurology',
+          'Ophthalmic Surgery',
+          'Orthopaedic Surgery',
+          'Pediatrics',
+          'Preventive Medicine',
+          'Radiology',
+          'Urology',
+          'Emergency Medicine',
+        ]"
+      />
+
+      <FormKit type="submit" class="btn-primary" label="Make an Appointment" />
+    </FormKit>
+
+    <div v-if="submitted">
+      <h2>Submission successful!</h2>
+    </div>
+  </div>
 </template>
 
 <style scoped>
@@ -134,40 +106,16 @@ const handleSubmit = e => {
   gap: 24px;
 }
 
-.form-title {
-  font-size: 24px;
-  font-weight: 800;
-  text-align: center;
+.super-red {
+  color: red;
 }
 
 .input-group {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   width: 100%;
   gap: 8px;
-}
-
-.form-label {
-  font-weight: 600;
-  line-height: 1.6;
-}
-
-.form-input {
-  height: 48px;
-  border: 1px solid var(--Gray-200);
-  border-radius: 8px;
-  padding: 0 12px;
-  font-size: 16px;
-}
-
-.form-input.error {
-  border-color: firebrick;
-}
-
-.invalid-input {
-  color: firebrick;
-  font-size: 14px;
-  display: none;
 }
 
 .btn-primary {
@@ -192,14 +140,6 @@ const handleSubmit = e => {
     gap: 32px;
   }
 
-  .form-title {
-    font-size: 28px;
-  }
-
-  .form-input {
-    font-size: 18px;
-  }
-
   .btn-primary {
     font-size: 18px;
     padding: 15px;
@@ -213,14 +153,7 @@ const handleSubmit = e => {
     padding: 40px;
     gap: 40px;
     height: 777px;
-  }
-
-  .form-title {
-    font-size: 32px;
-  }
-
-  .form-input {
-    font-size: 20px;
+    width: 500px;
   }
 
   .btn-primary {
@@ -231,14 +164,12 @@ const handleSubmit = e => {
     margin-top: 8rem;
   }
 
-  .form-input.error {
-    border-color: firebrick;
-  }
-
-  .invalid-input {
-    color: firebrick;
-    font-size: 14px;
-    display: none;
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    gap: 20px;
   }
 }
 </style>

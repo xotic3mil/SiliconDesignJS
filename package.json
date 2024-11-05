@@ -11,7 +11,11 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@formkit/vue": "^1.6.7",
+    "@vee-validate/i18n": "^4.14.6",
+    "@vee-validate/rules": "^4.14.6",
     "bootstrap": "^5.3.3",
+    "vee-validate": "^4.14.6",
     "vue": "^3.5.11",
     "vue-router": "^4.4.5"
   },

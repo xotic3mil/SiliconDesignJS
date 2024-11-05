@@ -20,6 +20,9 @@ const switchTheme = inject('switchTheme')
 </template>
 
 <style scoped>
+.label {
+  display: none;
+}
 .switch {
   position: relative;
   display: inline-block;
@@ -90,5 +93,11 @@ input:checked + .slider:before {
   margin-right: 1rem;
 
   gap: 10px;
+}
+
+@media (min-width: 768px) {
+  .label {
+    display: block;
+  }
 }
 </style>

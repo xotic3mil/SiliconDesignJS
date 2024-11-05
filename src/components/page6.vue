@@ -1,5 +1,6 @@
 <script setup>
 import accordion from '../components/accordion.vue'
+import newsletter from '../components/newsletter.vue'
 </script>
 <template>
   <section class="page-4">
@@ -48,27 +49,19 @@ import accordion from '../components/accordion.vue'
               updates
             </h2>
           </div>
-          <form>
-            <div class="subscribe">
-              <label for="email" class="form-label"></label>
-              <input
-                type="email"
-                placeholder="Enter your email"
-                name="email"
-                id="email"
-                autocomplete="on"
-              />
-              <button class="btn-subscribe" type="submit" id="button-addon2">
-                Subscribe
-              </button>
-            </div>
-          </form>
+          <div>
+            <newsletter />
+          </div>
         </div>
       </div>
     </div>
   </section>
 </template>
 <style scoped>
+.formkit-input {
+  width: 200px !important;
+  background-color: white;
+}
 .page-4 {
   padding-left: 1rem;
   padding-right: 1rem;
@@ -124,33 +117,6 @@ import accordion from '../components/accordion.vue'
       text-align: center;
       font-style: normal;
       font-weight: 600;
-    }
-  }
-
-  form {
-    padding-left: 1rem;
-    padding-right: 1rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 1rem;
-
-    input {
-      display: inline-flex;
-      height: 50.7px;
-      padding: 14.15px 18px 14.95px 48px;
-      justify-content: flex-end;
-      align-items: center;
-      border-radius: 8px 0px 0px 8px;
-      border: 1px solid #d4d7e5;
-      background: var(--white-color);
-    }
-
-    button {
-      color: var(--white-color);
-      border-radius: 0px 8px 8px 0px;
-      border: 1px solid var(--Brand-Primary);
-      background: var(--Brand-Primary);
     }
   }
 

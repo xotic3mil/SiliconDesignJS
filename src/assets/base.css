@@ -40,6 +40,12 @@
         0px 4.4px 12px -1px rgba(255, 255, 255, 0.06),
         2px 2px 6.4px 1px rgba(255, 255, 255, 0.2) !important;
     }
+    .formkit-input {
+      color: var(--Gray-100);
+    }
+    .formkit-help {
+      color: var(--Gray-500);
+    }
   }
 
   .icon-bg {

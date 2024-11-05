@@ -3,7 +3,7 @@ import darkmode from '../components/darkmode.vue'
 </script>
 <template>
   <header class="gloss">
-    <div class="ctn">
+    <div class="ctn container">
       <div class="logo">
         <img src="../../media/logo.svg" alt="Logo" />
         <a class="nav-ft" href="/">Silicon</a>
@@ -16,7 +16,7 @@ import darkmode from '../components/darkmode.vue'
           <span :class="{ open: isOpen }"></span>
         </div>
         <nav :class="{ navbar: true, open: isOpen }">
-          <div>
+          <div class="nav-ctn">
             <a class="nav-ft" href="#">Features</a>
             <a class="nav-ft" href="/contact">Contact</a>
           </div>
@@ -52,7 +52,7 @@ header.gloss {
   backdrop-filter: blur(3.5px);
   -webkit-backdrop-filter: blur(3.5px);
   border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 2px;
+  border-radius: 20px;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   margin-bottom: 5rem;
@@ -68,9 +68,9 @@ header.gloss {
   display: flex;
   justify-content: start;
   align-items: center;
-  gap: 1.5rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  gap: 1.75rem;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
 }
 
 .logo {
@@ -96,7 +96,7 @@ header.gloss {
 .hamburger span {
   width: 25px;
   height: 3px;
-  background-color: white;
+  background-color: grey;
   margin: 5px 0;
   transition: all 0.3s ease;
 }
@@ -132,6 +132,7 @@ header.gloss {
   backdrop-filter: blur(3.5px);
   -webkit-backdrop-filter: blur(3.5px);
   text-align: center;
+  border-radius: 20px;
 }
 
 .nav-ft {
@@ -170,6 +171,13 @@ header.gloss {
   #auth {
     display: block;
     margin-top: 10px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .ctn {
+    max-width: 1320px;
+    margin: 0 auto;
   }
 }
 </style>

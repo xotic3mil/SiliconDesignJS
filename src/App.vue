@@ -14,7 +14,7 @@ const initTheme = () => {
   const storedPreference = localStorage.getItem('theme')
   if (storedPreference) {
     isDarkMode.value = storedPreference === 'dark'
-  } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+  } else if (window.matchMedia('(data-bs-theme: dark)').matches) {
     isDarkMode.value = true
   }
   switchTheme()
@@ -23,7 +23,6 @@ const initTheme = () => {
 onMounted(() => {
   initTheme()
 })
-
 
 provide('isDarkMode', isDarkMode)
 provide('switchTheme', switchTheme)

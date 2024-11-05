@@ -126,7 +126,7 @@ import contactForm from './contactForm.vue'
 
 .contact-title-btm {
   text-align: center;
-  margin-top: 150px;
+  margin-top: 200px;
   margin-bottom: 2rem;
 }
 

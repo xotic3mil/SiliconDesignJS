@@ -1,9 +1,9 @@
 <script setup></script>
 <template>
-  <footer>©2024 Silicon. All rights reserved. Credit Silicon design.</footer>
+  <p>©2024 Silicon. All rights reserved. Credit Silicon design.</p>
 </template>
 <style scoped>
-footer {
+p {
   margin: 14px 22px;
   text-align: center;
   color: #9397ad;
